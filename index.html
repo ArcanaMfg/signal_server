@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="application-name" content="Viewer v0.3.4">
+<title>Viewer</title>
+<script>
+// Choose the preferred browser language before rendering the initial loader.
+document.documentElement.lang=/^ja(?:-|$)/i.test(navigator.languages?.[0] || navigator.language || 'en')?'ja':'en';
+if(document.documentElement.lang==='ja') document.title='ビューアー';
+</script>
+<style>
+body{margin:0;font:16px/1.7 system-ui,sans-serif;background:#f4f7fa;color:#19382f}
+#connection{position:fixed;inset:0;z-index:1;display:grid;place-content:center;text-align:center;padding:24px;background:#f4f7fa}
+#connection[hidden],#viewer[hidden],#spinner[hidden]{display:none}
+#spinner{width:32px;height:32px;margin:0 auto 12px;border:3px solid #d9e7e3;border-top-color:#16796a;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#spinner{animation:none}}
+html[lang="en"] [data-language="ja"],html[lang="ja"] [data-language="en"]{display:none}
+#progress{font-size:14px;overflow-wrap:anywhere;max-width:90vw}
+button{font:inherit;padding:10px 24px;margin:12px auto;border:0;border-radius:6px;color:white;background:#16796a;cursor:pointer}
+#viewer{position:fixed;inset:0;width:100%;height:100vh;height:100dvh;border:0;background:white}
+</style>
+<script defer src="peerjs.min.js"></script>
+<script defer src="file-transfer.js?v=034"></script>
+<script defer src="sd-viewer.js?v=034"></script>
+<script defer src="app.js?v=034"></script>
+</head>
+<body>
+<main id="connection">
+<div id="spinner" aria-hidden="true"></div>
+<p id="status" role="status"><span data-language="en" lang="en">Loading…</span><span data-language="ja" lang="ja">読み込み中…</span></p>
+<p id="progress" aria-live="polite">0%</p>
+<button id="retry" hidden><span data-language="en" lang="en">Reconnect</span><span data-language="ja" lang="ja">再接続する</span></button>
+</main>
+<iframe id="viewer" title="Content" hidden></iframe>
+</body>
+</html>
